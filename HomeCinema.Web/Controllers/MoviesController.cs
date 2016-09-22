@@ -41,6 +41,7 @@ namespace HomeCinema.Web.Controllers
         [Route("latest")]
         public HttpResponseMessage Get(HttpRequestMessage request)
         {
+            //git test
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage response = null;
