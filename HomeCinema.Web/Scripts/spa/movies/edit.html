@@ -18,7 +18,7 @@
                 <i class="fa fa-pencil-square-o"></i>
                 Edit <strong>{{movie.Title}}</strong> movie. Make sure you fill all required fields.
             </div>
-            <form class="form-horizontal" role="form" novalidate angular-validator name="editMovieForm" angular-validator-submit="UpdateMovie()">
+            <form class="form-horizontal" id="editMovie" role="form" novalidate angular-validator name="editMovieForm" angular-validator-submit="UpdateMovie()">
                 <div class="form-group">
                     <div class="row">
                         <div class="col-xs-8">
@@ -26,7 +26,6 @@
                             <input class="form-control" name="title" type="text" ng-model="movie.Title"
                                    validate-on="blur" required required-message="'Movie title is required'">
                         </div>
-
                         <div class="col-xs-4 selectContainer">
                             <label class="control-label">Genre</label>
                             <select ng-model="movie.GenreId" class="form-control black" ng-options="option.ID as option.Name for option in genres" required></select>
@@ -37,12 +36,32 @@
 
                 <div class="form-group">
                     <div class="row">
+                        <div class="col-xs-12">
+                            <label class="control-label">Starring</label>
+                            <div class="form-inline">
+                                <input class="form-control" type="text" id="FirstNameText" placeholder="First Name"
+                                       ng-model="tempActor.FirstName"
+                                       validate-on="blur" required-message="'Movie writer is required'" />
+                                <input class="form-control" type="text" id="LastNameText" placeholder="Last Name"
+                                       ng-model="tempActor.LastName"
+                                       validate-on="blur" required-message="'Movie writer is required'" />
+                                <button type="button" class="btn btn-default" ng-click="addActor()">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                                <label ng-repeat="actor in movie.Starring" class="label label-success label-actor" ng-click="removeActor($index)">
+                                    {{actor.FirstName}} {{actor.LastName}} &times;
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
                         <div class="col-xs-4">
                             <label class="control-label">Director</label>
                             <input class="form-control" type="text" ng-model="movie.Director" name="director"
                                    validate-on="blur" required required-message="'Movie director is required'">
                         </div>
-
                         <div class="col-xs-4">
                             <label class="control-label">Writer</label>
                             <input class="form-control" type="text" ng-model="movie.Writer" name="writer"
@@ -93,7 +112,8 @@
                 <div class="form-group col-xs-4">
                     <label class="control-label"></label>
                     <div class="">
-                        <input type="submit" class="btn btn-primary" value="Update" />
+                        <input type="submit" class="btn btn-primary" value="Update" ng-href="#/movies/{{movie.ID}}" />
+                        <!--<input id="btnSubmit" type="submit" class="btn btn-primary" value="Update" ng-click="editRedirect('#/movies/{{movie.ID}}')" />-->
                         <span></span>
                         <a class="btn btn-default" ng-href="#/movies/{{movie.ID}}">Cancel</a>
                     </div>

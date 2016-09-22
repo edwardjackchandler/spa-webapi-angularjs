@@ -1,8 +1,6 @@
-﻿(function(app) {
+﻿(function (app) {
     'use strict';
-
     app.directive('sideBar', sideBar);
-
     function sideBar() {
         return {
             restrict: 'E',
@@ -10,5 +8,4 @@
             templateUrl: '/scripts/spa/layout/sideBar.html'
         }
     }
-
 })(angular.module('common.ui'));

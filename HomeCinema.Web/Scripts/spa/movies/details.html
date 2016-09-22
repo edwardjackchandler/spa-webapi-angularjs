@@ -27,6 +27,7 @@
                         Directed by: <label>{{movie.Director}}</label><br />
                         Written by: <label>{{movie.Writer}}</label><br />
                         Produced by: <label>{{movie.Producer}}</label><br />
+                        Starring: <label ng-repeat="actor in movie.Starring">{{actor.FirstName}} {{actor.LastName + ($last ? '' : ',')}} &nbsp</label><br />
                         Rating: <span component-rating='{{movie.Rating}}'></span>
                         <br />
                         <label class="label label-info">{{movie.Genre}}</label>

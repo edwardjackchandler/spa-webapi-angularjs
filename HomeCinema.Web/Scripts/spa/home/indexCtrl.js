@@ -14,6 +14,13 @@
         $scope.latestMovies = [];
         $scope.loadData = loadData;
 
+        $scope.isLatestMoviesCollapsed = false;
+        $scope.isMoviesGenresCollapsed = false;
+
+        function loadRentals() {
+
+        }
+
         function loadData() {
             apiService.get('/api/movies/latest', null,
                         moviesLoadCompleted,
@@ -22,6 +29,10 @@
             apiService.get("/api/genres/", null,
                 genresLoadCompleted,
                 genresLoadFailed);
+
+            apiService.get('/api/"{id:int}/rentalhistory"', null,
+                        moviesLoadCompleted,
+                        moviesLoadFailed);
         }
 
         function moviesLoadCompleted(result) {

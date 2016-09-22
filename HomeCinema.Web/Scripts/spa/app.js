@@ -1,4 +1,5 @@
-﻿(function () {
+﻿/// <reference path="app.js" />
+(function () {
     'use strict';
 
     angular.module('homeCinema', ['common.core', 'common.ui'])
@@ -85,7 +86,7 @@
     isAuthenticated.$inject = ['membershipService', '$rootScope', '$location'];
 
     function isAuthenticated(membershipService, $rootScope, $location) {
-        if (!membershipService.isUserLoggedIn()) {
+        if (!membershipService.isUserLoggedIn) {
             $rootScope.previousState = $location.path();
             $location.path('/login');
         }

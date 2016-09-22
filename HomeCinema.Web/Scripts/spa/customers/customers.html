@@ -3,7 +3,7 @@
         <div class="panel-heading clearfix">
             <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Home Cinema Customers</h4>
             <div class="input-group">
-                <input id="inputSearchCustomers" type="search" ng-model="filterCustomers" class="form-control shortInputSearch" placeholder="Filter, search customers..">
+                <input id="inputSearchCustomers" type="search" ng-model="filterCustomers" ng-keyup="searchDelay()" class="form-control shortInputSearch" placeholder="Filter, search customers.." >
                 <div class="input-group-btn">
                     <button class="btn btn-primary" ng-click="search();"><i class="glyphicon glyphicon-search"></i></button>
                     <button class="btn btn-primary" ng-click="clearSearch();"><i class="glyphicon glyphicon-remove-sign"></i></button>
@@ -12,7 +12,7 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-sm-6" ng-repeat="customer in Customers | filter:filterCustomers">
+                <div class="col-sm-6" ng-repeat="customer in Customers">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <strong>{{customer.FirstName}} {{customer.LastName}}</strong><br/>

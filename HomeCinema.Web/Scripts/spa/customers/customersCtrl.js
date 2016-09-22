@@ -3,9 +3,9 @@
 
     app.controller('customersCtrl', customersCtrl);
 
-    customersCtrl.$inject = ['$scope','$modal', 'apiService', 'notificationService'];
+    customersCtrl.$inject = ['$scope', '$modal', 'apiService', 'notificationService', '$timeout'];
 
-    function customersCtrl($scope, $modal, apiService, notificationService) {
+    function customersCtrl($scope, $modal, apiService, notificationService, $timeout) {
 
         $scope.pageClass = 'page-customers';
         $scope.loadingCustomers = true;
@@ -15,6 +15,8 @@
 
         $scope.search = search;
         $scope.clearSearch = clearSearch;
+
+        var timeoutId = 0;
 
         $scope.search = search;
         $scope.clearSearch = clearSearch;
@@ -36,6 +38,11 @@
             apiService.get('/api/customers/search/', config,
             customersLoadCompleted,
             customersLoadFailed);
+        }
+
+        $scope.searchDelay = function() {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout($scope.search, 500);   
         }
 
         function openEditDialog(customer) {

@@ -3,7 +3,7 @@
 
     app.controller('moviesCtrl', moviesCtrl);
 
-    moviesCtrl.$inject = ['$scope', 'apiService','notificationService'];
+    moviesCtrl.$inject = ['$scope', 'apiService','notificationService', ];
 
     function moviesCtrl($scope, apiService, notificationService) {
         $scope.pageClass = 'page-movies';
@@ -12,6 +12,8 @@
         $scope.pagesCount = 0;
         
         $scope.Movies = [];
+        
+        var timeoutId = 0;
 
         $scope.search = search;
         $scope.clearSearch = clearSearch;
@@ -32,6 +34,11 @@
             apiService.get('/api/movies/', config,
             moviesLoadCompleted,
             moviesLoadFailed);
+        }
+
+        $scope.searchDelay = function () {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout($scope.search, 500);
         }
 
         function moviesLoadCompleted(result) {
@@ -56,6 +63,8 @@
             $scope.filterMovies = '';
             search();
         }
+
+        $('[data-toggle="tooltip"]').tooltip();
 
         $scope.search();
     }

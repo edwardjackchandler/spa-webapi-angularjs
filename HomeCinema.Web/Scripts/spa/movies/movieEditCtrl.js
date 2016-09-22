@@ -15,6 +15,66 @@
         $scope.prepareFiles = prepareFiles;
         $scope.openDatePicker = openDatePicker;
 
+        $scope.tempActor =
+        {
+            FirstName: '',
+            LastName: '',
+        };
+
+        $scope.addActor = function () {
+            
+
+            var cloneOfA = JSON.parse(JSON.stringify($scope.tempActor));
+
+            if (!duplicate(cloneOfA)) {
+                if ((validName(cloneOfA.FirstName)) && (validName(cloneOfA.LastName))) {
+                    $scope.movie.Starring.push(cloneOfA);
+                    $scope.tempActor.FirstName = "";
+                    $scope.tempActor.LastName = "";
+                }
+                else if ((validName(cloneOfA.FirstName)) && !(validName(cloneOfA.LastName))) {
+                    $scope.movie.Starring.push(cloneOfA);
+                    $scope.tempActor.FirstName = "";
+                }
+            }
+
+            wipeInput();
+        }
+
+        function duplicate(actor) {
+            for (var i = 0; i < $scope.movie.Starring.length; i++)
+            {
+                var starringFirstName = $scope.movie.Starring[i].FirstName;
+                var starringLastName = $scope.movie.Starring[i].LastName;
+
+                if ((actor.FirstName == starringFirstName) && (actor.LastName == starringLastName)) {
+                    return true;
+                }
+                else false;
+            }
+            
+        }
+
+        function wipeInput() {
+            document.getElementById("FirstNameText").value = "";
+            document.getElementById("LastNameText").value = "";
+            document.getElementById("FirstNameText").focus();
+        }
+
+        function validName(name) {
+            name = name.replace(/^\s+/, "").replace(/\s+$/, "").replace(/\s+/, " ");
+            if (name == "") {
+                return false;
+            }
+
+            else return true;
+
+        }
+
+        $scope.removeActor = function (index) {
+            $scope.movie.Starring.splice(index, 1);
+        }
+
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
@@ -80,6 +140,22 @@
             notificationService.displaySuccess($scope.movie.Title + ' has been updated');
             $scope.movie = response.data;
             movieImage = null;
+            redirectToMovie();
+        }
+
+        //function addMovieSucceded(response) {
+        //    notificationService.displaySuccess($scope.movie.Title + ' has been submitted to Home Cinema');
+        //    $scope.movie = response.data;
+
+        //    if (movieImage) {
+        //        fileUploadService.uploadImage(movieImage, $scope.movie.ID, redirectToEdit);
+        //    }
+        //    else
+        //        redirectToEdit();
+        //}
+
+        function redirectToMovie() {
+            $location.url('movies/' + $scope.movie.ID);
         }
 
         function updateMovieFailed(response) {
