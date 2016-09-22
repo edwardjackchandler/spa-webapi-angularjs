@@ -15,6 +15,7 @@ using System.Web;
 using System.Web.Http;
 using HomeCinema.Web.Infrastructure.Extensions;
 using HomeCinema.Data.Extensions;
+using HomeCinema.Services;
 
 namespace HomeCinema.Web.Controllers
 {
@@ -23,12 +24,17 @@ namespace HomeCinema.Web.Controllers
     public class MoviesController : ApiControllerBase
     {
         private readonly IEntityBaseRepository<Movie> _moviesRepository;
+        private readonly IEntityBaseRepository<Actor> _actorRepository;
+        //private readonly IStockWarningService _stockWarningService;
 
-        public MoviesController(IEntityBaseRepository<Movie> moviesRepository,
-            IEntityBaseRepository<Error> _errorsRepository, IUnitOfWork _unitOfWork)
+        public MoviesController(//IStockWarningService stockWarningService,
+        IEntityBaseRepository<Movie> moviesRepository, IEntityBaseRepository<Actor> actorRepository,
+        IEntityBaseRepository<Error> _errorsRepository, IUnitOfWork _unitOfWork)
             : base(_errorsRepository, _unitOfWork)
         {
+            //_stockWarningService = stockWarningService;
             _moviesRepository = moviesRepository;
+            _actorRepository = actorRepository;
         }
 
         [AllowAnonymous]
@@ -40,6 +46,13 @@ namespace HomeCinema.Web.Controllers
                 HttpResponseMessage response = null;
                 var movies = _moviesRepository.GetAll().OrderByDescending(m => m.ReleaseDate).Take(6).ToList();
 
+                foreach (var movie in movies)
+                {
+                    movie.Starring = _actorRepository.GetAll().Where(a => a.MovieId == movie.ID).ToList();
+                }
+
+                //_stockWarningService.outOfStock();
+
                 IEnumerable<MovieViewModel> moviesVM = Mapper.Map<IEnumerable<Movie>, IEnumerable<MovieViewModel>>(movies);
 
                 response = request.CreateResponse<IEnumerable<MovieViewModel>>(HttpStatusCode.OK, moviesVM);
@@ -48,6 +61,35 @@ namespace HomeCinema.Web.Controllers
             });
         }
 
+        //public List<string> outOfStock()
+        //{
+
+        //    List<string> outOfStockNames = new List<string>();
+        //    var movies = _moviesRepository.GetAll().ToList();
+
+        //    int availableCounter = 0;
+        //    foreach (var movie in movies)
+        //    {
+        //        foreach(var item in movie.Stocks)
+        //        {
+        //            if (item.IsAvailable == true)
+        //            {
+        //                availableCounter += 1;
+        //            }
+        //        }
+
+        //        if (availableCounter == 0)
+        //        {
+        //            outOfStockNames.Add(movie.Title);
+        //        }
+
+        //        availableCounter = 0;
+        //    }
+
+        //    return outOfStockNames;
+        //}
+
+
         [Route("details/{id:int}")]
         public HttpResponseMessage Get(HttpRequestMessage request, int id)
         {
@@ -55,6 +97,7 @@ namespace HomeCinema.Web.Controllers
             {
                 HttpResponseMessage response = null;
                 var movie = _moviesRepository.GetSingle(id);
+                movie.Starring = _actorRepository.GetAll().Where(a => a.MovieId == movie.ID).ToList();
 
                 MovieViewModel movieVM = Mapper.Map<Movie, MovieViewModel>(movie);
 
@@ -104,6 +147,11 @@ namespace HomeCinema.Web.Controllers
                     totalMovies = _moviesRepository.GetAll().Count();
                 }
 
+                foreach (var movie in movies)
+                {
+                    movie.Starring = _actorRepository.GetAll().Where(a => a.MovieId == movie.ID).ToList();
+                }
+
                 IEnumerable<MovieViewModel> moviesVM = Mapper.Map<IEnumerable<Movie>, IEnumerable<MovieViewModel>>(movies);
 
                 PaginationSet<MovieViewModel> pagedSet = new PaginationSet<MovieViewModel>()
@@ -148,7 +196,14 @@ namespace HomeCinema.Web.Controllers
                         newMovie.Stocks.Add(stock);
                     }
 
+                    //_actorRepository.Add(newMovie.Starring)
                     _moviesRepository.Add(newMovie);
+
+                    foreach (var actor in newMovie.Starring)
+                    {
+                        _actorRepository.Add(actor);
+
+                    }
 
                     _unitOfWork.Commit();
 
@@ -175,11 +230,26 @@ namespace HomeCinema.Web.Controllers
                 }
                 else
                 {
+                    var currentActorList = _actorRepository.GetAll().Where(a => a.MovieId == movie.ID).ToList();
+
                     var movieDb = _moviesRepository.GetSingle(movie.ID);
                     if (movieDb == null)
                         response = request.CreateErrorResponse(HttpStatusCode.NotFound, "Invalid movie.");
                     else
                     {
+                        //Delete all actors from DB that are in currentActorList, add all current actors from movie.Starring
+                        foreach (var actor in currentActorList)
+                        {
+                            _actorRepository.Delete(actor);
+                        }
+
+                        foreach (var actor in movie.Starring)
+                        {
+                            _actorRepository.Add(actor);
+
+                        }
+
+                        //movie.Starring.Clear();
                         movieDb.UpdateMovie(movie);
                         movie.Image = movieDb.Image;
                         _moviesRepository.Edit(movieDb);

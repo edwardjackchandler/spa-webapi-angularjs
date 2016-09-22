@@ -25,6 +25,7 @@ namespace HomeCinema.Data
         public IDbSet<UserRole> UserRoleSet { get; set; }
         public IDbSet<Customer> CustomerSet { get; set; }
         public IDbSet<Movie> MovieSet { get; set; }
+        public IDbSet<Actor> ActorSet { get; set; }
         public IDbSet<Genre> GenreSet { get; set; }
         public IDbSet<Stock> StockSet { get; set; }
         public IDbSet<Rental> RentalSet { get; set; }
@@ -38,12 +39,12 @@ namespace HomeCinema.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
             modelBuilder.Configurations.Add(new UserConfiguration());
             modelBuilder.Configurations.Add(new UserRoleConfiguration());
             modelBuilder.Configurations.Add(new RoleConfiguration());
             modelBuilder.Configurations.Add(new CustomerConfiguration());
             modelBuilder.Configurations.Add(new MovieConfiguration());
+            modelBuilder.Configurations.Add(new ActorConfiguration());
             modelBuilder.Configurations.Add(new GenreConfiguration());
             modelBuilder.Configurations.Add(new StockConfiguration());
             modelBuilder.Configurations.Add(new RentalConfiguration());

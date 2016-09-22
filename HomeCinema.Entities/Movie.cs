@@ -19,6 +19,7 @@ namespace HomeCinema.Entities
         public int GenreId { get; set; }
         public virtual Genre Genre { get; set; }
         public string Director { get; set; }
+        public List<Actor> Starring { get; set; }
         public string Writer { get; set; }
         public string Producer { get; set; }
         public DateTime ReleaseDate { get; set; }

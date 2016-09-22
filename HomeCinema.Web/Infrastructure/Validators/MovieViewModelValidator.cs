@@ -14,10 +14,13 @@ namespace HomeCinema.Web.Infrastructure.Validators
             RuleFor(movie => movie.GenreId).GreaterThan(0)
                 .WithMessage("Select a Genre");
 
-            RuleFor(movie => movie.Director).NotEmpty().Length(1,100)
+            RuleFor(movie => movie.Director).NotEmpty().Length(1, 100)
                 .WithMessage("Select a Director");
 
-            RuleFor(movie => movie.Writer).NotEmpty().Length(1,50)
+            RuleFor(movie => movie.Starring).NotEmpty()
+                .WithMessage("Select starring");
+
+            RuleFor(movie => movie.Writer).NotEmpty().Length(1, 50)
                 .WithMessage("Select a writer");
 
             RuleFor(movie => movie.Producer).NotEmpty().Length(1, 50)

@@ -15,6 +15,7 @@ namespace HomeCinema.Web.Infrastructure.Extensions
             movie.Description = movieVm.Description;
             movie.GenreId = movieVm.GenreId;
             movie.Director = movieVm.Director;
+            movie.Starring = movieVm.Starring;
             movie.Writer = movieVm.Writer;
             movie.Producer = movieVm.Producer;
             movie.Rating = movieVm.Rating;

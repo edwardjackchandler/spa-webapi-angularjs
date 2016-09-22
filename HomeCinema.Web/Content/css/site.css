@@ -53,8 +53,7 @@ body {
     margin: 0 !important;
 }
 
-ul.pagination > li
-{
+ul.pagination > li {
     cursor: pointer;
 }
 
@@ -263,4 +262,26 @@ ul.pagination > li
 
 .red {
     color: red;
+}
+
+.label-actor {
+    margin: 2px;
+    font-size: large !important;
+}
+
+.blue-tooltip + .tooltip > .tooltip-inner {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    background-color: #3072AB;
+    max-width: 350px;
+    font-size: 18px;
+}
+
+.blue-tooltip + .tooltip.right > .tooltip-arrow {
+    border-right-color: #3072AB;
+}
+
+.label-info {
+    margin-right: 2px;
+
 }

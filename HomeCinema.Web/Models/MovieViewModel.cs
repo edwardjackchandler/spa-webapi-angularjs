@@ -1,4 +1,5 @@
-﻿using HomeCinema.Web.Infrastructure.Validators;
+﻿using HomeCinema.Entities;
+using HomeCinema.Web.Infrastructure.Validators;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace HomeCinema.Web.Models
         public string Genre { get; set; }
         public int GenreId { get; set; }
         public string Director { get; set; }
+        public List<Actor> Starring { get; set; }
         public string Writer { get; set; }
         public string Producer { get; set; }
         public DateTime ReleaseDate { get; set; }
@@ -32,6 +34,12 @@ namespace HomeCinema.Web.Models
             var validator = new MovieViewModelValidator();
             var result = validator.Validate(this);
             return result.Errors.Select(item => new ValidationResult(item.ErrorMessage, new[] { item.PropertyName }));
+        }
+
+        public string test()
+        {
+            string testString = "test";
+            return testString;
         }
     }
 }
