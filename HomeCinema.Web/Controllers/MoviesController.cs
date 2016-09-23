@@ -25,14 +25,11 @@ namespace HomeCinema.Web.Controllers
     {
         private readonly IEntityBaseRepository<Movie> _moviesRepository;
         private readonly IEntityBaseRepository<Actor> _actorRepository;
-        //private readonly IStockWarningService _stockWarningService;
 
-        public MoviesController(//IStockWarningService stockWarningService,
-        IEntityBaseRepository<Movie> moviesRepository, IEntityBaseRepository<Actor> actorRepository,
+        public MoviesController(IEntityBaseRepository<Movie> moviesRepository, IEntityBaseRepository<Actor> actorRepository,
         IEntityBaseRepository<Error> _errorsRepository, IUnitOfWork _unitOfWork)
             : base(_errorsRepository, _unitOfWork)
         {
-            //_stockWarningService = stockWarningService;
             _moviesRepository = moviesRepository;
             _actorRepository = actorRepository;
         }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCinema.Entities", "HomeCinema.Entities\HomeCinema.Entities.csproj", "{3E8BB046-05BD-4D27-94A7-C13AD4F3E192}"
 EndProject
@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{994CCF
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCinema.TestHarness", "HomeCinema.TestHarness\HomeCinema.TestHarness.csproj", "{1F36C3E7-62AA-4D49-B82F-225DCCE2825F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,10 @@ Global
 		{32415527-525D-490D-8B46-7BA4C3D45F7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32415527-525D-490D-8B46-7BA4C3D45F7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32415527-525D-490D-8B46-7BA4C3D45F7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F36C3E7-62AA-4D49-B82F-225DCCE2825F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F36C3E7-62AA-4D49-B82F-225DCCE2825F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F36C3E7-62AA-4D49-B82F-225DCCE2825F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F36C3E7-62AA-4D49-B82F-225DCCE2825F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
