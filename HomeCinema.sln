@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{994CCF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeCinema.TestHarness", "HomeCinema.TestHarness\HomeCinema.TestHarness.csproj", "{1F36C3E7-62AA-4D49-B82F-225DCCE2825F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutOfStockService", "OutOfStockService\OutOfStockService.csproj", "{D3C6AE09-D019-4D37-8DFD-7B63D5C37536}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{1F36C3E7-62AA-4D49-B82F-225DCCE2825F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F36C3E7-62AA-4D49-B82F-225DCCE2825F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F36C3E7-62AA-4D49-B82F-225DCCE2825F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3C6AE09-D019-4D37-8DFD-7B63D5C37536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3C6AE09-D019-4D37-8DFD-7B63D5C37536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3C6AE09-D019-4D37-8DFD-7B63D5C37536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3C6AE09-D019-4D37-8DFD-7B63D5C37536}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -14,25 +14,19 @@ namespace HomeCinema.Services
     public class StockWarning
     {
         private readonly HomeCinemaContext _dbContext;
-        private SmtpClient _googleSmtpClient;   
+        SmtpClient googleSmtpClient = new SmtpClient();
 
-        public StockWarning(HomeCinemaContext dbContext, SmtpClient googleSmtpClient)
+        public StockWarning(HomeCinemaContext dbContext)
         {
             _dbContext = dbContext;
-            _googleSmtpClient = googleSmtpClient;
-            sendList(outOfStock());
-        }
-
-        public void setCredentials()
-        {
-
-            //_googleSmtpClient.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
-            _googleSmtpClient.Credentials = new System.Net.NetworkCredential
+            googleSmtpClient.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+            googleSmtpClient.Credentials = new System.Net.NetworkCredential
                  ("eugenestockwarning@gmail.com", "stockwarning"); // ***use valid credentials***
-            //_googleSmtpClient.Port = 587;
+            googleSmtpClient.Port = 587;
 
             //Or your Smtp Email ID and Password
-            _googleSmtpClient.EnableSsl = true;
+            googleSmtpClient.EnableSsl = true;
+            sendList(outOfStock());
         }
 
         public MailMessage createMail(String message)
@@ -49,25 +43,25 @@ namespace HomeCinema.Services
             return mail;
         }
 
-        public void sendList(List<string> outOfStockMovieNames)
+        public void sendList(List<Tuple<string, int>> outOfStockMovies)
         {
             try
             {
                 String email = "ALERT! No more available copies in the following films: ";
                 int index = 1;
-                foreach(var name in outOfStockMovieNames)
+                foreach(var movie in outOfStockMovies)
                 {
-                    if (index == outOfStockMovieNames.Count)
+                    if (index == outOfStockMovies.Count)
                     {
-                        email += name;
+                        email += createLink(movie.Item1, movie.Item2);
                     }
 
-                    else email += name + ", ";
+                    else email += createLink(movie.Item1, movie.Item2) + ", ";
 
                     index++;
                 }
 
-                _googleSmtpClient.Send(createMail(email));
+                googleSmtpClient.Send(createMail(email));
 
             }
             catch (Exception ex)
@@ -77,10 +71,10 @@ namespace HomeCinema.Services
             }
         }
 
-        public List<string> outOfStock()
+        public List<Tuple<string, int>> outOfStock()
         {
 
-            List<string> outOfStockNames = new List<string>();
+            List<Tuple<string, int>> outOfStockNames = new List<Tuple<string, int>>();
             var movies = _dbContext.MovieSet.ToList();
 
             int availableCounter = 0;
@@ -96,13 +90,24 @@ namespace HomeCinema.Services
 
                 if (availableCounter == 0)
                 {
-                    outOfStockNames.Add(movie.Title);
+                    Tuple<string, int> nameAndID = new Tuple<string, int>(movie.Title, movie.ID);
+                    outOfStockNames.Add(nameAndID);
                 }
 
                 availableCounter = 0;
             }
 
             return outOfStockNames;
+        }
+
+        public string createLink(string name, int id)
+        {
+            string part1 = "<a href = 'localhost:1487/#/movies/";
+            string part2 = id.ToString() + "'>";
+            string part3 = name + "</a>";
+            string fullLink = part1 + part2 + part3;
+
+            return fullLink;
         }
 
     }

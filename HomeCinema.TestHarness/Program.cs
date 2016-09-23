@@ -16,13 +16,11 @@ namespace HomeCinema.TestHarness
 
         static void Main(string[] args)
         {
-            SmtpClient googleSmtpClient = new SmtpClient("smtp.gmail.com", 587);
-
             HomeCinemaContext context = new HomeCinemaContext();
 
             //var movies = _moviesRepository.GetAll().ToList();
 
-            StockWarning s = new StockWarning(context, googleSmtpClient);
+            StockWarning s = new StockWarning(context);
             s.outOfStock();
 
 
